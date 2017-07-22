@@ -1,0 +1,146 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <conio.h>
+
+long long longNumber;
+int reversedArray[15];
+int longArray[15];
+int totalOdd;
+int totalEven;
+char longCharArray[16];
+int length;
+
+int main()
+{
+	enterCardNumber();
+	checkNoOfDigits();
+	convertToArray();
+	cardType();
+	luhnsTest();
+	return 0;
+}
+
+pause();
+
+int enterCardNumber()
+{
+	printf("+----------------------------------------------------------------------+\n"); 
+	printf("|                    Welcome to the Credit Card Check                  |\n");
+	printf("|                                                                      |\n");
+	printf("|                  Please enter your credit card number                |\n");
+	printf("+----------------------------------------------------------------------+\n");
+	scanf("%lld", &longNumber);
+
+	return 0;
+}
+
+
+int checkNoOfDigits() {
+
+	if (longNumber > 9 && longNumber < 100) length = 2;
+	if (longNumber > 99 && longNumber < 1000) length = 3;
+	if (longNumber > 999 && longNumber < 10000) length = 4;
+	if (longNumber > 9999 && longNumber < 100000) length = 5;
+	if (longNumber > 99999 && longNumber < 1000000) length = 6;
+	if (longNumber > 999999 && longNumber < 10000000) length = 7;
+	if (longNumber > 9999999 && longNumber < 100000000) length = 8;
+	if (longNumber > 99999999 && longNumber < 1000000000) length = 9;
+	if (longNumber > 999999999 && longNumber < 10000000000) length = 10;
+	if (longNumber > 9999999999 && longNumber < 100000000000) length = 11;
+	if (longNumber > 99999999999 && longNumber < 1000000000000) length = 12;
+	if (longNumber > 999999999999 && longNumber < 10000000000000) length = 13;
+	if (longNumber > 9999999999999 && longNumber < 10000000000000) length = 14;
+	if (longNumber > 99999999999999 && longNumber < 100000000000000) length = 15;
+	if (longNumber > 999999999999999 && longNumber < 1000000000000000) length = 16;
+
+	if (length == 15 || length == 16)
+		printf("Please enter a valid card number\n");
+
+	else {
+		printf("+----------------------------------------------------------------------+\n");
+		printf("|                              * WARNING *                             |\n");
+		printf("|   The number that has been entered is not a 15 or 16 digit number    |\n");
+		printf("|                            Please try again                          |\n");
+		printf("+----------------------------------------------------------------------+\n");
+	}
+
+
+
+	return 0;
+}
+
+int convertToArray() {
+
+	snprintf(longCharArray, 16, "%lld", longNumber);
+
+	for (int i = 0; i < 15; i++) {
+		longArray[i] = longCharArray[i] - '0';
+	}
+
+	return 0;
+}
+
+int luhnsTest() {
+	if (length == 15 || length == 16)
+	{
+		for (int i = 0; i <= 14; i++)
+		{
+			reversedArray[i] = longArray[14 - i];
+
+			if (reversedArray[i] > 9)
+			{
+				reversedArray[i] = (reversedArray[i] - 9);
+			}
+
+		}
+
+		totalOdd += reversedArray[1];
+		totalOdd += reversedArray[3];
+		totalOdd += reversedArray[5];
+		totalOdd += reversedArray[7];
+		totalOdd += reversedArray[9];
+		totalOdd += reversedArray[11];
+		totalOdd += reversedArray[13];
+
+		totalEven += reversedArray[0];
+		totalEven += reversedArray[2];
+		totalEven += reversedArray[4];
+		totalEven += reversedArray[6];
+		totalEven += reversedArray[8];
+		totalEven += reversedArray[10];
+		totalEven += reversedArray[12];
+		totalEven += reversedArray[14];
+
+
+		if (totalOdd + totalEven % 10 == 0)
+			printf("The card passes Luhns test \n");
+
+	}
+		else {
+			printf("+----------------------------------------------------------------------+\n");
+			printf("|                               * ERROR *                              |\n");
+			printf("|                           Lunhs Test Failed                          |\n");
+			printf("+----------------------------------------------------------------------+\n");
+		}
+
+	return 0;
+}
+
+int cardType() {
+
+	if (longArray[0] == 3 && longArray[1] == 4 || longArray[0] == 3 && longArray[1] == 7)
+		printf("AmEx \n");
+
+	if (longArray[0] == 6 && longArray[1] == 0 && longArray[2] == 1 && longArray[3] == 1 || longArray[0] == 6 && longArray[1] == 4 && longArray[2] == 4 || longArray[0] == 6 && longArray[1] == 5)
+		printf("Discover \n");
+
+	if (longArray[0] == 5 && longArray[1] == 0 || longArray[0] == 5 && longArray[1] == 1 || longArray[0] == 5 && longArray[1] == 2 || longArray[0] == 5 && longArray[1] == 3 || longArray[0] == 5 && longArray[1] == 4 || longArray[0] == 5 && longArray[1] == 5)
+		printf("MasterCard \n");
+
+	if (longArray[0] == 4)
+		printf("Visa \n");
+
+	return 0;
+}
